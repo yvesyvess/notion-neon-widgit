@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week Widget – Vaporwave</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        font-family: "Inter", sans-serif;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 360px;
+        height: 110px;
+        border-radius: 18px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          #0b0416 0%,
+          #2b1055 10%,
+          #00ced1 35%,
+          #40e0d0 50%,
+          #ff2d95 75%,
+          #ff71ce 100%
+        );
+        box-shadow:
+          0 0 15px rgba(255, 45, 149, 0.3),
+          0 0 30px rgba(0, 206, 209, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* soft haze */
+      .haze {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 70% 20%,
+          rgba(255, 255, 255, 0.15),
+          transparent 55%
+        );
+        z-index: 1;
+      }
+
+      /* horizon bands */
+      svg {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+
+      .inner-glass {
+        position: absolute;
+        width: 82%;
+        height: 64%;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+        border-radius: 16px;
+        z-index: 3;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      }
+
+      .week {
+        position: absolute;
+        top: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 26px;
+        font-weight: 800;
+        color: #fff;
+        z-index: 4;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-shadow:
+          0 0 8px rgba(255, 45, 149, 0.8),
+          0 0 15px rgba(0, 255, 255, 0.5);
+      }
+
+      .date {
+        position: absolute;
+        top: 62px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+        font-weight: 500;
+        color: #fff;
+        z-index: 4;
+        letter-spacing: 0.02em;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="haze"></div>
+
+      <!-- vaporwave horizon -->
+      <svg viewBox="0 0 360 110" preserveAspectRatio="none">
+        <path
+          d="M0,65 Q90,55 180,60 T360,52"
+          fill="none"
+          stroke="#00ffff"
+          stroke-width="3"
+          opacity="0.6"
+        />
+        <path
+          d="M0,78 Q120,75 240,70 T360,72"
+          fill="none"
+          stroke="#ff9ad5"
+          stroke-width="2"
+          opacity="0.5"
+        />
+        <path
+          d="M0,90 Q140,92 260,88 T360,90"
+          fill="none"
+          stroke="#40e0d0"
+          stroke-width="1.5"
+          opacity="0.4"
+        />
+      </svg>
+
+      <div class="inner-glass"></div>
+      <div id="week" class="week"></div>
+      <div id="date" class="date"></div>
+    </div>
+
+    <script>
+      const projectStartDate = new Date("2026-02-16");
+      const currentDate = new Date();
+      const msPerDay = 86400000;
+
+      const daysDiff = Math.floor((currentDate - projectStartDate) / msPerDay);
+
+      const weekNumber = daysDiff < 0 ? 1 : Math.floor(daysDiff / 7) + 1;
+
+      const weekStart = new Date(projectStartDate);
+      weekStart.setDate(projectStartDate.getDate() + (weekNumber - 1) * 7);
+
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+
+      const fmt = (d) =>
+        d.toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+        });
+
+      document.getElementById("week").textContent = `WEEK ${weekNumber}`;
+      document.getElementById("date").textContent =
+        `${fmt(weekStart)} – ${fmt(weekEnd)}`;
+    </script>
+  </body>
+</html>

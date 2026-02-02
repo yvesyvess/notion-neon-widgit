@@ -33,13 +33,13 @@
         overflow: hidden;
         background: linear-gradient(
           135deg,
-          #f4a7b9 0%,
-          #ffc0cb 50%,
-          #f8b9c3 100%
+          #e89aad 0%,   /* darker pastel pink */
+          #f2a6b8 50%,  /* medium pastel pink */
+          #eaa6b0 100%  /* soft muted pink */
         );
         box-shadow:
           0 8px 25px rgba(255, 182, 193, 0.4),
-          inset 0 0 40px rgba(255, 255, 255, 0.3);
+          inset 0 0 40px rgba(255, 255, 255, 0.2);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,7 +51,7 @@
         inset: 0;
         background: radial-gradient(
           circle at 30% 30%,
-          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.25),
           transparent 70%
         );
         z-index: 1;
@@ -61,15 +61,16 @@
         position: absolute;
         width: 82%;
         height: 64%;
-        background: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
         border-radius: 16px;
         z-index: 3;
         box-shadow: 
-          inset 0 0 0 1px rgba(255, 255, 255, 0.4),
+          inset 0 0 0 1px rgba(255, 182, 193, 0.3),
           0 4px 15px rgba(255, 182, 193, 0.15);
       }
 
+      /* bubble-style 3D text for week */
       .week {
         position: absolute;
         top: 22px;
@@ -82,12 +83,13 @@
         letter-spacing: 0.05em;
         text-transform: uppercase;
         text-shadow:
-          0 1px 0 #f4a7b9,
-          0 2px 0 #f4a7b9,
-          0 3px 0 #f4a7b9,
-          0 4px 8px rgba(180, 80, 100, 0.3);
+          0 1px 0 #e89aad,
+          0 2px 0 #e89aad,
+          0 3px 0 #e89aad,
+          0 4px 8px rgba(150, 70, 90, 0.35);
       }
 
+      /* softer bubble text for date */
       .date {
         position: absolute;
         top: 62px;
@@ -99,9 +101,9 @@
         z-index: 4;
         letter-spacing: 0.02em;
         text-shadow:
-          0 1px 0 #f4a7b9,
-          0 2px 0 #f4a7b9,
-          0 3px 6px rgba(180, 80, 100, 0.25);
+          0 1px 0 #e89aad,
+          0 2px 0 #e89aad,
+          0 3px 6px rgba(150, 70, 90, 0.3);
       }
     </style>
   </head>
@@ -109,7 +111,6 @@
   <body>
     <div class="card">
       <div class="haze"></div>
-
       <div class="inner-glass"></div>
       <div id="week" class="week"></div>
       <div id="date" class="date"></div>
@@ -121,7 +122,6 @@
       const msPerDay = 86400000;
 
       const daysDiff = Math.floor((currentDate - projectStartDate) / msPerDay);
-
       const weekNumber = daysDiff < 0 ? 1 : Math.floor(daysDiff / 7) + 1;
 
       const weekStart = new Date(projectStartDate);
